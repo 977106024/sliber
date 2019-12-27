@@ -81,6 +81,8 @@
         $imgWrap.width((imgCount+2) * imgWidth) //设置容器的总宽度
         $imgWrap.css({left:-imgWidth}) //默认位置到第一张
 
+        var pageIndex = 0
+
         $('.bar>.right').click(function(){
             playNext()
         })
@@ -94,7 +96,12 @@
                 {
                     left:'-=' + imgWidth
                 },function(){
-                    
+                    pageIndex ++
+                    console.log(pageIndex)
+                    if(pageIndex === imgCount){ //pageIndex默认是0 到最后一张是4
+                        pageIndex = 0
+                        $imgWrap.css({left:-imgWidth})
+                    }
             })
         }
 
@@ -103,7 +110,11 @@
                 {
                     left:'+=' + imgWidth
                 },function(){
-                    
+                    pageIndex --
+                    if(pageIndex < 0){
+                        pageIndex = imgCount - 1 //最后一张 3
+                        $imgWrap.css({left:-imgWidth * imgCount})//最后一张 4
+                    }
             })
         }
 
