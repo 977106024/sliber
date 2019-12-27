@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            #slider{
+                width: 380px;
+                height: 180px;
+                overflow: hidden;
+                position: relative;
+            }
+            .img-wrap{
+                /* width: 380px; */
+                display: flex;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 11;
+            }
+            .img-wrap>img{
+                width: 380px;
+                height: 180px;
+            } 
+        
+            .bar{
+                
+            }
+            .bar >span{
+                color: #fff;
+                width: 30px;
+                height: 30px;
+                background: cornflowerblue;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 30px;
+                position: absolute;
+                top: 50%;
+                z-index: 11;
+            }
+            .bar > .left{
+                left: 10px;
+            }
+            .bar > .right{
+                right: 10px;
+            }
+        </style>
+</head>
+<body>
+    <div id="slider">
+        <div class="img-wrap">
+            <!-- <div class="imgs-wrap"> -->
+                <img data-id="0" src="http://cdn.jirengu.com/book.jirengu.com/img/2.jpg" alt="">
+                <img data-id="1"  src="http://cdn.jirengu.com/book.jirengu.com/img/3.jpg" alt="">
+                <img data-id="2" src="http://cdn.jirengu.com/book.jirengu.com/img/4.jpg" alt="">
+                <img data-id="3" src="http://cdn.jirengu.com/book.jirengu.com/img/5.jpg" alt="">
+            <!-- </div> -->
+        </div>
+        <div class="bar">
+            <span class="left"> < </span>
+            <span class="right"> > </span>
+        </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script>
+        var $imgWrap = $('.img-wrap')
+        var $imgs = $('.img-wrap > img')
+
+        var imgWidth = $imgs.width()
+        var imgCount = $imgs.length
+        $imgWrap.append($imgs.first().clone()) //克隆前面 后面 多一张
+        $imgWrap.prepend($imgs.last().clone())
+        $imgWrap.width((imgCount+2) * imgWidth) //设置容器的总宽度
+        $imgWrap.css({left:-imgWidth}) //到第一张
+
+        $('.bar>.right').click(function(){
+           playNext()
+        })
+
+        $('.bar>.left').click(function(){
+            playPre()
+        })
+
+        function nextPlay(){
+            console.log($('.imgs'))
+            $imgWrap.animate({left:'-=' + imgWidth},function(){
+
+            })
+        }
+
+    </script>
+</body>
+</html>
