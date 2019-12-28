@@ -51,6 +51,28 @@
             .bar > .right{
                 right: 10px;
             }
+
+            #slider .bullet {
+                position: absolute;
+                bottom: 10px;
+                width: 100%;
+                font-size: 0;
+                z-index: 12;
+                text-align: center;
+            }
+            #slider .bullet >li{
+                display: inline-block;
+                width: 30px;
+                height: 5px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                margin: 0 3px;
+                cursor: pointer;
+            }
+            #slider .bullet >li.active{
+                background-color: #ccc;
+            }
+
         </style>
 </head>
 <body>
@@ -67,6 +89,12 @@
             <span class="left"> < </span>
             <span class="right"> > </span>
         </div>
+        <ul class="bullet">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+		</ul>
     </div>
 
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -102,6 +130,7 @@
                         pageIndex = 0
                         $imgWrap.css({left:-imgWidth})
                     }
+                    setBullet()
             })
         }
 
@@ -115,9 +144,15 @@
                         pageIndex = imgCount - 1 //最后一张 3
                         $imgWrap.css({left:-imgWidth * imgCount})//最后一张 4
                     }
+                    setBullet()
             })
         }
 
+        function setBullet(){
+			$('.bullet > li').removeClass('active')
+							.eq(pageIndex)
+							.addClass('active')
+		}
     </script>
 </body>
 </html>
