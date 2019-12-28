@@ -112,6 +112,7 @@
         $imgWrap.css({left:-imgWidth}) //默认位置到第一张
 
         var pageIndex = 0
+        var isAnimate = false
 
         $('.bar>.right').click(function(){
             playNext(1)
@@ -131,6 +132,8 @@
         })
 
         function playNext(len){
+            if(isAnimate)return
+            isAnimate = true 
             $imgWrap.animate(
                 {
                     left:'-=' + len * imgWidth
@@ -142,6 +145,7 @@
                         $imgWrap.css({left:-imgWidth})
                     }
                     setBullet()
+                    isAnimate = false
             })
         }
 
