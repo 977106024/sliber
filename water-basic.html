@@ -82,25 +82,44 @@
     </div>
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script>
-        var itemCount = parseInt($('.content').width()/$('.content .item').width()) //总宽度/单个宽度 = 个数
-        console.log(itemCount)
-        var itemArr = []
-        for(var i =0;i<itemCount;i++){ //给默认值
-            itemArr[i] = 0
-        }
+        var water =  (function(){
+          function water(){
+            var itemCount = parseInt($('.content').width()/$('.content .item').width()) //总宽度/单个宽度 = 个数
+            console.log(itemCount)
+            var itemArr = []
+            for(var i =0;i<itemCount;i++){ //给默认值
+                itemArr[i] = 0
+            }
 
-        console.log(itemArr)
-        $('.item').each(function(){
-            var minValue = Math.min.apply(null,itemArr)
-            var minIndex = itemArr.indexOf(minValue)
-            console.log(minIndex)
-            $(this).css({                          //给每个元素设置位置
-                top:itemArr[minIndex],
-                left:$(this).outerWidth(true) * minIndex //left就是 单个宽度 * 个数(index在的位置)
+            console.log(itemArr)
+            $('.item').each(function(){
+                var minValue = Math.min.apply(null,itemArr)
+                var minIndex = itemArr.indexOf(minValue)
+                console.log(minIndex)
+                $(this).css({                          //给每个元素设置位置
+                    top:itemArr[minIndex],
+                    left:$(this).outerWidth(true) * minIndex //left就是 单个宽度 * 个数(index在的位置)
+                })
+
+                itemArr[minIndex] += $(this).outerHeight(true) //下次的top 就是这次item的高度
             })
+            }
+            
+            function init(){
+                water()
+                $(window).resize(function(){
+                water()
+            })
+            }
 
-            itemArr[minIndex] += $(this).outerHeight(true) //下次的top 就是这次item的高度
-        })
+            return {
+                init:init
+            }
+            
+        })()
+        
+        // water.init()
+
     </script>
 </body>
 </html>
