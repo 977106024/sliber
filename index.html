@@ -99,8 +99,10 @@
 
     <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script>
+
         var $imgWrap = $('.img-wrap')
         var $imgs = $('.img-wrap > img')
+        var $bullet = $('.bullet > li')
 
         var imgWidth = $imgs.width()
         var imgCount = $imgs.length
@@ -112,19 +114,28 @@
         var pageIndex = 0
 
         $('.bar>.right').click(function(){
-            playNext()
+            playNext(1)
         })
 
         $('.bar>.left').click(function(){
-            playPre()
+            playPre(1)
         })
 
-        function playNext(){
+        $bullet.click(function(){
+            var index = $(this).index()
+            if(index > pageIndex){
+                playNext(index - pageIndex)
+            }else if(index < pageIndex){
+                playPre(pageIndex - index)
+            }
+        })
+
+        function playNext(len){
             $imgWrap.animate(
                 {
-                    left:'-=' + imgWidth
+                    left:'-=' + len * imgWidth
                 },function(){
-                    pageIndex ++
+                    pageIndex += len
                     console.log(pageIndex)
                     if(pageIndex === imgCount){ //pageIndex默认是0 到最后一张是4
                         pageIndex = 0
@@ -134,12 +145,12 @@
             })
         }
 
-        function playPre(){
+        function playPre(len){
             $imgWrap.animate(
                 {
-                    left:'+=' + imgWidth
+                    left:'+=' + len * imgWidth
                 },function(){
-                    pageIndex --
+                    pageIndex -= len
                     if(pageIndex < 0){
                         pageIndex = imgCount - 1 //最后一张 3
                         $imgWrap.css({left:-imgWidth * imgCount})//最后一张 4
@@ -149,7 +160,7 @@
         }
 
         function setBullet(){
-			$('.bullet > li').removeClass('active')
+			$bullet.removeClass('active')
 							.eq(pageIndex)
 							.addClass('active')
 		}
